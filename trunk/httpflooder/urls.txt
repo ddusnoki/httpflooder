@@ -1,0 +1,6 @@
+/index.asp
+/index.aspx
+/index.php
+/index.jsp
+/index.html
+/index.htm
