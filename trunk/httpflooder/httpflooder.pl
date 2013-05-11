@@ -120,8 +120,8 @@ sub print_usage {
 	  [--urls]            : Request URL files
 	  [--port]        -p  : Port for HTTP request
 	  [--https]           : SSL support
-	  [--ip]          -i  : source ip
-	  [--ips]             : source ip files
+	  [--ip]          -i  : Source IP
+	  [--ips]             : Source IPs files
 	  [--useragent]   -ua : User-Agent for HTTP Request Header
 	  [--useragents]      : User-Agent files for HTTP Request Header
 	  [--referer]         : Referer header for HTTP Request
@@ -138,12 +138,12 @@ sub print_usage {
           [--basic-auth]      : Basic Authentication for HTTP Request
 	  [--num]         -n  : Connection number for tool.
 	  [--interval]        : Add headers/data/param per request for Slow Headers/POST/Params attack.
-	  [--delay]           : sleep per additional header in a request for Slow Headers attack.
+	  [--delay]           : Delay per additional header in a request for Slow Headers attack.
           [--verbose]     -v  : verbose output
                                 1 => Thread, Host, IP, Response Code
                                 2 => Request
                                 3 => Request, Response
-          [--help]            : display usage and options
+          [--help]            : Display usage and options
 
 );
 }
