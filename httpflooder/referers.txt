@@ -1,0 +1,4 @@
+http://www.site.com/index.asp
+http://www.google.com/
+http://www.site.com/product.jsp
+http://www.owasp.org/index.php
