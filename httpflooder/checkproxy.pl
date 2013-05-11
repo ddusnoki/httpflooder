@@ -3,7 +3,7 @@
 # checkproxy.pl
 # $Id $
 #
-# Version: 1.0
+# Version: 0.1
 # Created: 2013-02-06, Bunyamin Demir
 #
 # Description: Check Proxy
