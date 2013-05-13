@@ -106,9 +106,9 @@ bunyamin$ perl httpflooder.pl -a *RB* -h www.site.com --ips ips.txt --urls urls.
 
 ===MX Flood over Balancer===
 
-MX Flood saldırı tipinde olduğu gibi urls.txt dosyası yapılacak atağın senaryosunu barındırır. Dolayısı ile -n veya --num ile verilecek toplam istek sayısı kadar urls.txt dosyasının içerisinde bulunan tüm senaryo işletilir.
+urls.txt file contains the scenario of the attack as in the MX flood attack type. So the scenarios in the urls.txt will be executed as much as the count which stated with -n/-num parameter.
 
-Örnek bir urls.txt dosyası;
+sample url.txt file;
 
 /index.jsp
 /login.jsp#username=value1&password=value
