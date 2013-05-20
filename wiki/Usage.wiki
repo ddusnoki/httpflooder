@@ -41,6 +41,7 @@ HTTP Flooder, v1.0
 	  [--num]         -n  : Connection number for tool.
 	  [--interval]        : Add headers/data/param per request for Slow Headers/POST/Params attack.
 	  [--delay]           : Delay per additional header in a request for Slow Headers attack.
+	  [--duration]      : Duration for test (second)
           [--verbose]     -v  : verbose output
                                 1 => Thread, Host, IP, Response Code
                                 2 => Request
