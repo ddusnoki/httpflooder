@@ -39,7 +39,7 @@ $stats{ip}   = &share({});
 my %opt = (host         => 'www.site.com',
 	   cookie       => undef,
 	   attack       => 'GF',
-	   ip           => '127.0.0.2',
+	   ip           => undef,
 	   ips          => undef,
 	   url          => '/',
 	   urls         => undef,
@@ -65,6 +65,7 @@ my %opt = (host         => 'www.site.com',
 	   customcookie => undef,
 	   verbose      => 0,
 	   port         => 80,
+           duration     => 0,
 	  );
 
 GetOptions('a|attack=s'     ,\$opt{attack},
@@ -95,6 +96,7 @@ GetOptions('a|attack=s'     ,\$opt{attack},
 	   'n|num=i'        ,\$opt{num},
 	   'interval=i'     ,\$opt{interval},
 	   'delay=i'        ,\$opt{delay},
+           'duration=s'     ,\$opt{duration},
 	   "v|verbose=s"    ,\$opt{verbose},
 	   "help"           ,sub { &print_usage; exit(0); },
 	  );
@@ -139,6 +141,7 @@ sub print_usage {
 	  [--num]         -n  : Connection number for tool.
 	  [--interval]        : Add headers/data/param per request for Slow Headers/POST/Params attack.
 	  [--delay]           : Delay per additional header in a request for Slow Headers attack.
+	  [--duration]        : Duration for test (second)
           [--verbose]     -v  : verbose output
                                 1 => Thread, Host, IP, Response Code
                                 2 => Request
@@ -749,6 +752,10 @@ sub read_list {
   elsif ($opt->{proxy_file}) {
     $reads->{ips}  = &read_files($opt->{proxy_file});
   }
+  else {
+    $opt->{ip} = &get_local_ip_address();
+    push @{$reads->{ips}}, $opt->{ip};
+  }
 
   # ... Read urls
   if ($opt->{urls}) {
@@ -997,7 +1004,10 @@ sub statistics {
 
   my $c = 0;
   my $i = -1;
-  foreach (1 .. $opt->{num}) {
+
+  my $dr = $opt->{duration} || $opt->{num};
+
+  foreach (1 .. $dr) {
     my ($sec,$min,$hour) = localtime();
 
     my $cd = undef;
@@ -1009,8 +1019,25 @@ sub statistics {
     $c = $stats->{ccount}-$i;
     last if ($stats->{ccount} == $i);
     $i = $stats->{ccount};
+    
     sleep(1);
   }
+
+  exit;
+}
+
+# --------------------------------------------------------------------------
+
+sub get_local_ip_address {
+    my $socket = IO::Socket::INET->new(
+        Proto       => 'udp',
+        PeerAddr    => '198.41.0.4', # a.root-servers.net
+        PeerPort    => '53',
+    );
+
+    my $local_ip_address = $socket->sockhost;
+
+    return $local_ip_address;
 }
 
 # --------------------------------------------------------------------------
