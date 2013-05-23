@@ -18,12 +18,9 @@
 #
 
 use strict;
-use LWP::UserAgent;
-use HTML::Parse;
 use Getopt::Long;
 use Thread;
 use IO::Socket;
-use threads;
 use threads::shared;
 use Time::HiRes qw(gettimeofday tv_interval);
 use POSIX qw/ceil/;
@@ -64,7 +61,7 @@ my %opt = (host         => 'www.site.com',
 	   delay        => undef,
 	   customcookie => undef,
 	   verbose      => 0,
-	   port         => 80,
+	   port         => 0,
            duration     => 0,
 	  );
 
@@ -96,7 +93,7 @@ GetOptions('a|attack=s'     ,\$opt{attack},
 	   'n|num=i'        ,\$opt{num},
 	   'interval=i'     ,\$opt{interval},
 	   'delay=i'        ,\$opt{delay},
-           'duration=s'     ,\$opt{duration},
+           'duration=i'     ,\$opt{duration},
 	   "v|verbose=s"    ,\$opt{verbose},
 	   "help"           ,sub { &print_usage; exit(0); },
 	  );
@@ -163,6 +160,10 @@ $stats{begin_attack} = gettimeofday;
 
 if ($opt{basicauth}) {
   $opt{basicauth} = encode_base64($opt{basicauth});
+}
+
+unless ($opt{port}) {
+  $opt{https} ? $opt{port} = 443 : $opt{port} = 80;
 }
 
 my %reads = ();
@@ -1019,11 +1020,11 @@ sub statistics {
     $c = $stats->{ccount}-$i;
     last if ($stats->{ccount} == $i);
     $i = $stats->{ccount};
-    
+
+    exit if $_ == $opt->{duration};
+
     sleep(1);
   }
-
-  exit;
 }
 
 # --------------------------------------------------------------------------
