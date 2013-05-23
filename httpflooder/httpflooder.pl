@@ -163,7 +163,12 @@ if ($opt{basicauth}) {
 }
 
 unless ($opt{port}) {
-  $opt{ssl} ? $opt{port} = 443 : $opt{port} = 80;
+  if ($opt{ssl}) {
+    $opt{port} = 443;
+  }
+  else {
+    $opt{port} = 80;
+  }
 }
 
 my %reads = ();
