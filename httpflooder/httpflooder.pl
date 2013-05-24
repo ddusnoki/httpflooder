@@ -478,6 +478,8 @@ sub slow_headers {
     $req .= "User-Agent: $uagent\r\n" if $uagent;
     $req .= "Referer: $ref\r\n" if $ref;
 
+    $stats->{ccount}++;
+
     print($socket $req);
 
     foreach (1 .. $opt->{interval}) {
@@ -491,8 +493,6 @@ sub slow_headers {
     $socket->close();
 
     my $rcode = &_parse_code($stats,$msg);
-
-    $stats->{ccount}++;
 
     &_logger($opt,$ip,$thread,$req,$rcode,$msg,$stats->{ccount}) if $opt->{verbose};
   }
@@ -1026,7 +1026,10 @@ sub statistics {
     last if ($stats->{ccount} == $i);
     $i = $stats->{ccount};
 
-    exit if $_ == $opt->{duration};
+    if ($_ == $opt->{duration}) {
+      &print_stats(\%stats);
+      exit;
+    }
 
     sleep(1);
   }
