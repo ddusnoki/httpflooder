@@ -1013,7 +1013,7 @@ sub statistics {
 
   my $dr = $opt->{duration} || $opt->{num};
 
-  foreach (1 .. $dr) {
+  foreach my $st (1 .. $dr) {
     my ($sec,$min,$hour) = localtime();
 
     my $cd = undef;
@@ -1023,14 +1023,16 @@ sub statistics {
 
     print "$hour:$min:$sec | Total Req: $stats->{ccount} | Rate:$c | RespCode:$cd\r\n";
     $c = $stats->{ccount}-$i;
-    last if ($stats->{ccount} == $i);
-    $i = $stats->{ccount};
 
-    if ($_ == $opt->{duration}) {
+    if ($st == $opt->{duration}) {
       &print_stats(\%stats);
       exit;
     }
-
+    else {
+      last if ($stats->{ccount} == $i);
+      $i = $stats->{ccount};
+    }
+    
     sleep(1);
   }
 }
